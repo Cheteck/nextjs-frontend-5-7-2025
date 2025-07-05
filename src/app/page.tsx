@@ -1,103 +1,187 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState, useEffect } from 'react';
+import PostComposer from '../components/PostComposer';
+import PostCard from '../components/PostCard';
+import ProductCard from '../components/ProductCard';
+import { getPosts, getNewArrivals, getPromotions, getPopularProducts } from '../services/api';
+
+interface Post {
+  id: number;
+  content: string;
+  username: string;
+  handle: string;
+  time: string;
+  avatarSrc: string;
+  comments: number;
+  reposts: number;
+  likes: number;
+  product?: {
+    name: string;
+    price: string;
+    imageSrc: string;
+    link: string;
+  };
+}
+
+interface Product {
+  id: number;
+  name: string;
+  category: string;
+  price: string;
+  image: string;
+  originalPrice?: string; // For promotions
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [newArrivals, setNewArrivals] = useState<Product[]>([]);
+  const [promotions, setPromotions] = useState<Product[]>([]);
+  const [popularProducts, setPopularProducts] = useState<Product[]>([]);
+  const [loadingPosts, setLoadingPosts] = useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(true);
+  const [errorPosts, setErrorPosts] = useState<string | null>(null);
+  const [errorProducts, setErrorProducts] = useState<string | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const fetchPosts = async () => {
+    setLoadingPosts(true);
+    setErrorPosts(null);
+    try {
+      const fetchedPosts = await getPosts();
+      setPosts(fetchedPosts as Post[]);
+    } catch (err: any) {
+      setErrorPosts(err.message || 'Failed to fetch posts.');
+    } finally {
+      setLoadingPosts(false);
+    }
+  };
+
+  const fetchProductSections = async () => {
+    setLoadingProducts(true);
+    setErrorProducts(null);
+    try {
+      const [arrivals, promos, popular] = await Promise.all([
+        getNewArrivals(),
+        getPromotions(),
+        getPopularProducts(),
+      ]);
+      setNewArrivals(arrivals as Product[]);
+      setPromotions(promos as Product[]);
+      setPopularProducts(popular as Product[]);
+    } catch (err: any) {
+      setErrorProducts(err.message || 'Failed to fetch product sections.');
+    } finally {
+      setLoadingProducts(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+    fetchProductSections();
+  }, []);
+
+  const handlePostCreated = () => {
+    fetchPosts(); // Refresh posts after a new one is created
+  };
+
+  if (loadingPosts || loadingProducts) {
+    return <div className="flex justify-center items-center h-full text-white">Loading content...</div>;
+  }
+
+  if (errorPosts || errorProducts) {
+    return <div className="flex justify-center items-center h-full text-red-500">Error: {errorPosts || errorProducts}</div>;
+  }
+
+  return (
+    <div className="flex flex-col items-center p-4">
+      <PostComposer onPostCreated={handlePostCreated} />
+
+      {/* Social Feed */}
+      <div className="w-full max-w-2xl mb-8">
+        <h2 className="text-xl font-bold mb-4">Your Feed</h2>
+        {posts.length === 0 ? (
+          <p className="text-center text-gray-500">No posts yet. Be the first to post!</p>
+        ) : (
+          posts.map((post) => (
+            <PostCard
+              key={post.id}
+              username={post.username}
+              handle={post.handle}
+              time={post.time}
+              content={post.content}
+              avatarSrc={post.avatarSrc}
+              product={post.product}
+              comments={post.comments}
+              reposts={post.reposts}
+              likes={post.likes}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          ))
+        )}
+      </div>
+
+      {/* New Arrivals Section */}
+      <div className="w-full max-w-2xl bg-gray-900 p-4 rounded-lg mb-8">
+        <h2 className="text-xl font-bold mb-3">New Arrivals</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {newArrivals.length === 0 ? (
+            <p className="text-center text-gray-500 col-span-full">No new arrivals at the moment.</p>
+          ) : (
+            newArrivals.map((product) => (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                category={product.category}
+                price={product.price}
+                image={product.image}
+              />
+            ))
+          )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+
+      {/* Promotions Section */}
+      <div className="w-full max-w-2xl bg-gray-900 p-4 rounded-lg mb-8">
+        <h2 className="text-xl font-bold mb-3">Promotions</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {promotions.length === 0 ? (
+            <p className="text-center text-gray-500 col-span-full">No promotions available.</p>
+          ) : (
+            promotions.map((product) => (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                category={product.category}
+                price={product.price}
+                image={product.image}
+              />
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* Popular Products Section */}
+      <div className="w-full max-w-2xl bg-gray-900 p-4 rounded-lg">
+        <h2 className="text-xl font-bold mb-3">Popular Products</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {popularProducts.length === 0 ? (
+            <p className="text-center text-gray-500 col-span-full">No popular products at the moment.</p>
+          ) : (
+            popularProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                category={product.category}
+                price={product.price}
+                image={product.image}
+              />
+            ))
+          )}
+        </div>
+      </div>
     </div>
   );
 }
+

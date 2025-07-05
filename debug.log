@@ -1,0 +1,362 @@
+ [33m[1m⚠[22m[39m Found a change in next.config.js. Restarting the server to apply the changes...
+ [33m[1m⚠[22m[39m The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+ [31m[1m⨯[22m[39m ./src/components/PostCard.tsx:142:11
+Parsing ecmascript source code failed
+[0m [90m 140 |[39m[0m
+[0m [90m 141 |[39m [36mexport[39m [36mdefault[39m [33mPostCard[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 142 |[39m         [33m<[39m[33m/[39m[33mbutton[39m[33m>[39m[0m
+[0m [90m     |[39m           [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+[0m [90m 143 |[39m[0m
+[0m [90m 144 |[39m         [33m<[39m[33mbutton[39m[0m
+[0m [90m 145 |[39m           className[33m=[39m[32m"flex items-center gap-2 px-4 py-2 rounded-xl hover:bg-red-500/10 text-gray-400 hover:text-red-400 transition-all duration-200 group"[39m[0m
+
+Expression expected
+
+
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+[TypeError: fetch failed] {
+  [cause]: [Error: getaddrinfo ENOTFOUND via.placeholder.com] {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'via.placeholder.com'
+  }
+}
+ [31m[1m⨯[22m[39m [Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: object. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.] {
+  digest: '1886094758'
+}
