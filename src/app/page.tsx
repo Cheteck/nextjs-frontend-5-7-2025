@@ -30,7 +30,7 @@ interface Product {
   category: string;
   price: string;
   image: string;
-  originalPrice?: string; // For promotions
+  originalPrice?: string;
 }
 
 export default function Home() {
@@ -42,6 +42,7 @@ export default function Home() {
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [errorPosts, setErrorPosts] = useState<string | null>(null);
   const [errorProducts, setErrorProducts] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'for-you' | 'following'>('for-you');
 
   const fetchPosts = async () => {
     setLoadingPosts(true);
@@ -81,107 +82,251 @@ export default function Home() {
   }, []);
 
   const handlePostCreated = () => {
-    fetchPosts(); // Refresh posts after a new one is created
+    fetchPosts();
   };
 
-  if (loadingPosts || loadingProducts) {
-    return <div className="flex justify-center items-center h-full text-white">Loading content...</div>;
+  if (loadingPosts && loadingProducts) {
+    return (
+      <div className="min-h-screen">
+        {/* Header Skeleton */}
+        <div className="sticky top-0 bg-black/80 backdrop-blur-md border-b border-gray-800/50 p-4">
+          <div className="skeleton h-6 w-24 rounded"></div>
+        </div>
+        
+        {/* Post Composer Skeleton */}
+        <div className="border-b border-gray-800/50 p-4">
+          <div className="flex space-x-4">
+            <div className="skeleton w-12 h-12 rounded-full"></div>
+            <div className="flex-1 space-y-3">
+              <div className="skeleton h-4 w-3/4 rounded"></div>
+              <div className="skeleton h-4 w-1/2 rounded"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Posts Skeleton */}
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="border-b border-gray-800/50 p-4">
+            <div className="flex space-x-3">
+              <div className="skeleton w-12 h-12 rounded-full"></div>
+              <div className="flex-1 space-y-3">
+                <div className="skeleton h-4 w-1/3 rounded"></div>
+                <div className="skeleton h-4 w-full rounded"></div>
+                <div className="skeleton h-4 w-2/3 rounded"></div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
   }
 
-  if (errorPosts || errorProducts) {
-    return <div className="flex justify-center items-center h-full text-red-500">Error: {errorPosts || errorProducts}</div>;
+  if (errorPosts && errorProducts) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4">😵</div>
+          <h2 className="text-xl font-bold text-white mb-2">Something went wrong</h2>
+          <p className="text-gray-500 mb-4">We're having trouble loading the content</p>
+          <button
+            onClick={() => {
+              fetchPosts();
+              fetchProductSections();
+            }}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-full transition-all duration-200 hover:scale-105"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="flex flex-col items-center p-4">
+    <div className="min-h-screen">
+      {/* Header */}
+      <div className="sticky top-0 bg-black/80 backdrop-blur-md border-b border-gray-800/50 z-10">
+        <div className="flex items-center justify-between p-4">
+          <h1 className="text-xl font-bold text-white">Home</h1>
+          <button className="text-gray-400 hover:text-white transition-colors">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Tabs */}
+        <div className="flex border-b border-gray-800/50">
+          <button
+            onClick={() => setActiveTab('for-you')}
+            className={`flex-1 py-4 text-center font-medium transition-all duration-200 relative ${
+              activeTab === 'for-you'
+                ? 'text-white'
+                : 'text-gray-500 hover:text-gray-300'
+            }`}
+          >
+            For you
+            {activeTab === 'for-you' && (
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-blue-500 rounded-full"></div>
+            )}
+          </button>
+          <button
+            onClick={() => setActiveTab('following')}
+            className={`flex-1 py-4 text-center font-medium transition-all duration-200 relative ${
+              activeTab === 'following'
+                ? 'text-white'
+                : 'text-gray-500 hover:text-gray-300'
+            }`}
+          >
+            Following
+            {activeTab === 'following' && (
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-blue-500 rounded-full"></div>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Post Composer */}
       <PostComposer onPostCreated={handlePostCreated} />
 
-      {/* Social Feed */}
-      <div className="w-full max-w-2xl mb-8">
-        <h2 className="text-xl font-bold mb-4">Your Feed</h2>
-        {posts.length === 0 ? (
-          <p className="text-center text-gray-500">No posts yet. Be the first to post!</p>
-        ) : (
-          posts.map((post) => (
-            <PostCard
-              key={post.id}
-              username={post.username}
-              handle={post.handle}
-              time={post.time}
-              content={post.content}
-              avatarSrc={post.avatarSrc}
-              product={post.product}
-              comments={post.comments}
-              reposts={post.reposts}
-              likes={post.likes}
-            />
-          ))
-        )}
-      </div>
+      {/* Content based on active tab */}
+      {activeTab === 'for-you' ? (
+        <>
+          {/* Social Feed */}
+          <div>
+            {posts.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">🌟</div>
+                <h2 className="text-xl font-bold text-white mb-2">Welcome to IJIDeals!</h2>
+                <p className="text-gray-500">Be the first to share something amazing</p>
+              </div>
+            ) : (
+              posts.map((post) => (
+                <PostCard
+                  key={post.id}
+                  id={post.id}
+                  username={post.username}
+                  handle={post.handle}
+                  time={post.time}
+                  content={post.content}
+                  avatarSrc={post.avatarSrc}
+                  product={post.product}
+                  comments={post.comments}
+                  reposts={post.reposts}
+                  likes={post.likes}
+                />
+              ))
+            )}
+          </div>
 
-      {/* New Arrivals Section */}
-      <div className="w-full max-w-2xl bg-gray-900 p-4 rounded-lg mb-8">
-        <h2 className="text-xl font-bold mb-3">New Arrivals</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {newArrivals.length === 0 ? (
-            <p className="text-center text-gray-500 col-span-full">No new arrivals at the moment.</p>
-          ) : (
-            newArrivals.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                name={product.name}
-                category={product.category}
-                price={product.price}
-                image={product.image}
-              />
-            ))
-          )}
-        </div>
-      </div>
+          {/* Product Sections */}
+          {!loadingProducts && (
+            <>
+              {/* New Arrivals */}
+              {newArrivals.length > 0 && (
+                <div className="border-b border-gray-800/50 p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-xl font-bold text-white flex items-center">
+                      <span className="mr-2">✨</span>
+                      New Arrivals
+                    </h2>
+                    <button className="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                      See all
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3">
+                    {newArrivals.slice(0, 2).map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        id={product.id}
+                        name={product.name}
+                        category={product.category}
+                        price={product.price}
+                        image={product.image}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
 
-      {/* Promotions Section */}
-      <div className="w-full max-w-2xl bg-gray-900 p-4 rounded-lg mb-8">
-        <h2 className="text-xl font-bold mb-3">Promotions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {promotions.length === 0 ? (
-            <p className="text-center text-gray-500 col-span-full">No promotions available.</p>
-          ) : (
-            promotions.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                name={product.name}
-                category={product.category}
-                price={product.price}
-                image={product.image}
-              />
-            ))
-          )}
-        </div>
-      </div>
+              {/* Promotions */}
+              {promotions.length > 0 && (
+                <div className="border-b border-gray-800/50 p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-xl font-bold text-white flex items-center">
+                      <span className="mr-2">🔥</span>
+                      Hot Deals
+                    </h2>
+                    <button className="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                      See all
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3">
+                    {promotions.slice(0, 2).map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        id={product.id}
+                        name={product.name}
+                        category={product.category}
+                        price={product.price}
+                        image={product.image}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
 
-      {/* Popular Products Section */}
-      <div className="w-full max-w-2xl bg-gray-900 p-4 rounded-lg">
-        <h2 className="text-xl font-bold mb-3">Popular Products</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {popularProducts.length === 0 ? (
-            <p className="text-center text-gray-500 col-span-full">No popular products at the moment.</p>
-          ) : (
-            popularProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                name={product.name}
-                category={product.category}
-                price={product.price}
-                image={product.image}
-              />
-            ))
+              {/* Popular Products */}
+              {popularProducts.length > 0 && (
+                <div className="border-b border-gray-800/50 p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-xl font-bold text-white flex items-center">
+                      <span className="mr-2">📈</span>
+                      Trending
+                    </h2>
+                    <button className="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                      See all
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3">
+                    {popularProducts.slice(0, 2).map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        id={product.id}
+                        name={product.name}
+                        category={product.category}
+                        price={product.price}
+                        image={product.image}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
           )}
+        </>
+      ) : (
+        /* Following Tab */
+        <div className="text-center py-12">
+          <div className="text-6xl mb-4">👥</div>
+          <h2 className="text-xl font-bold text-white mb-2">Follow some accounts</h2>
+          <p className="text-gray-500 mb-6">
+            When you follow accounts, you'll see their posts here.
+          </p>
+          <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-full transition-all duration-200 hover:scale-105">
+            Find people to follow
+          </button>
         </div>
-      </div>
+      )}
+
+      {/* Load More Button */}
+      {posts.length > 0 && activeTab === 'for-you' && (
+        <div className="p-6 text-center">
+          <button className="text-blue-400 hover:text-blue-300 font-medium transition-colors">
+            Show more posts
+          </button>
+        </div>
+      )}
     </div>
   );
 }
-
