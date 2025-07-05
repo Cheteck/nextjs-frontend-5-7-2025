@@ -79,38 +79,38 @@ const AuctionDetailPage: React.FC<AuctionDetailProps> = ({ params }) => {
   }
 
   return (
-    <div className="flex flex-col items-center p-4">
-      <h1 className="text-3xl font-bold mb-6">{auction.name}</h1>
+    <div className="flex flex-col items-center p-4 w-full max-w-5xl mx-auto">
+      <h1 className="text-3xl font-bold mb-8 text-white">{auction.name}</h1>
 
-      <div className="w-full max-w-4xl bg-gray-900 p-6 rounded-lg shadow-lg">
-        <img src={auction.image} alt={auction.name} className="w-full h-80 object-cover rounded-lg mb-6" />
+      <div className="w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8 rounded-2xl shadow-2xl border border-gray-700/50">
+        <img src={auction.image} alt={auction.name} className="w-full h-96 object-cover rounded-xl shadow-lg mb-8 border border-gray-700" />
 
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold mb-2">Description</h2>
-          <p className="text-gray-300">{auction.description}</p>
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold mb-4 text-white">Description</h2>
+          <p className="text-gray-300 leading-relaxed">{auction.description}</p>
         </div>
 
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold mb-2">Current Bid: <span className="text-green-400">${auction.currentBid.toFixed(2)}</span></h2>
-          <p className="text-gray-400">Ends: {new Date(auction.endTime).toLocaleString()}</p>
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold mb-4 text-white">Current Bid: <span className="text-green-400">${auction.currentBid.toFixed(2)}</span></h2>
+          <p className="text-gray-400 text-sm">Ends: {new Date(auction.endTime).toLocaleString()}</p>
         </div>
 
         {isAuthenticated && (
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold mb-2">Place a Bid</h2>
-            <div className="flex">
+          <div className="mb-8 p-6 border border-gray-700/50 rounded-xl bg-gray-800/50">
+            <h2 className="text-xl font-bold mb-4 text-white">Place a Bid</h2>
+            <div className="flex flex-col sm:flex-row gap-4">
               <input
                 type="number"
                 step="0.01"
                 placeholder="Your bid amount"
-                className="input-field flex-1 mr-2"
+                className="w-full sm:flex-1 p-3 rounded-lg bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-700"
                 value={bidAmount}
                 onChange={(e) => setBidAmount(e.target.value)}
                 disabled={loading}
               />
               <button
                 onClick={handlePlaceBid}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition-all duration-200 hover:scale-105"
                 disabled={loading}
               >
                 Place Bid
@@ -120,14 +120,14 @@ const AuctionDetailPage: React.FC<AuctionDetailProps> = ({ params }) => {
         )}
 
         <div className="mb-6">
-          <h2 className="text-2xl font-bold mb-2">Bid History</h2>
+          <h2 className="text-2xl font-bold mb-4 text-white">Bid History</h2>
           {auction.bidHistory.length === 0 ? (
             <p className="text-gray-500">No bids yet.</p>
           ) : (
-            <ul className="space-y-2">
+            <ul className="space-y-4">
               {auction.bidHistory.map((bid, index) => (
-                <li key={index} className="bg-gray-800 p-3 rounded-lg flex justify-between items-center">
-                  <p><span className="font-bold">{bid.bidder}</span> bid <span className="text-green-400">${bid.amount.toFixed(2)}</span></p>
+                <li key={index} className="bg-gray-800 p-4 rounded-lg flex justify-between items-center border border-gray-700">
+                  <p className="text-white"><span className="font-bold text-blue-400">{bid.bidder}</span> bid <span className="text-green-400 font-bold">${bid.amount.toFixed(2)}</span></p>
                   <p className="text-gray-400 text-sm">{new Date(bid.time).toLocaleString()}</p>
                 </li>
               ))}

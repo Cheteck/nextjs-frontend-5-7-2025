@@ -62,33 +62,33 @@ const NotificationsPage = () => {
   }
 
   return (
-    <div className="flex flex-col items-center p-4">
-      <h1 className="text-3xl font-bold mb-6">Notifications</h1>
+    <div className="flex flex-col items-center p-4 w-full max-w-4xl mx-auto">
+      <h1 className="text-3xl font-bold mb-8 text-white">Notifications</h1>
 
       {notifications.length === 0 ? (
         <p className="text-center text-gray-500">No new notifications.</p>
       ) : (
-        <div className="w-full max-w-2xl bg-gray-900 rounded-lg">
+        <div className="w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-2xl border border-gray-700/50">
           {notifications.map((notif) => (
             <div
               key={notif.id}
-              className={`p-4 border-b border-gray-800 flex items-center justify-between ${notif.read ? 'opacity-60' : ''}`}
+              className={`p-6 border-b border-gray-700/50 flex items-center justify-between last:border-b-0 ${notif.read ? 'opacity-60' : 'hover:bg-gray-800/50 transition-colors duration-200'}`}
             >
               <div className="flex items-center">
                 <img
-                  src="https://via.placeholder.com/40"
+                  src="https://via.placeholder.com/48"
                   alt="User Avatar"
-                  className="w-10 h-10 rounded-full mr-3"
+                  className="w-12 h-12 rounded-full mr-4 object-cover ring-1 ring-gray-600"
                 />
                 <div>
-                  <p className="font-bold">{notif.message}</p>
-                  <p className="text-gray-500 text-sm">{new Date(notif.timestamp).toLocaleString()}</p>
+                  <p className="font-bold text-white text-lg">{notif.message}</p>
+                  <p className="text-gray-400 text-sm">{new Date(notif.timestamp).toLocaleString()}</p>
                 </div>
               </div>
               {!notif.read && (
                 <button
                   onClick={() => handleMarkAsRead(notif.id)}
-                  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded-full text-sm"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-sm transition-all duration-200 hover:scale-105"
                 >
                   Mark as Read
                 </button>
