@@ -207,35 +207,35 @@ const AdminDashboardPage = () => {
   }
 
   return (
-    <div className="flex flex-col items-center p-4">
-      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
+    <div className="flex flex-col items-center p-4 w-full max-w-6xl mx-auto">
+      <h1 className="text-3xl font-bold mb-8 text-white">Admin Dashboard</h1>
 
       {/* User Management Section */}
-      <div className="w-full max-w-4xl bg-gray-900 p-6 rounded-lg shadow-lg mb-8">
-        <h2 className="text-2xl font-bold mb-4">User Management</h2>
+      <div className="w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8 rounded-2xl shadow-2xl border border-gray-700/50 mb-8">
+        <h2 className="text-2xl font-bold mb-6 text-white">User Management</h2>
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-gray-800 rounded-lg overflow-hidden">
+          <table className="min-w-full bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
             <thead>
-              <tr className="bg-gray-700">
-                <th className="py-2 px-4 text-left">Username</th>
-                <th className="py-2 px-4 text-left">Email</th>
-                <th className="py-2 px-4 text-left">Role</th>
-                <th className="py-2 px-4 text-left">Status</th>
-                <th className="py-2 px-4 text-left">Actions</th>
+              <tr className="bg-gray-700 text-white">
+                <th className="py-3 px-5 text-left">Username</th>
+                <th className="py-3 px-5 text-left">Email</th>
+                <th className="py-3 px-5 text-left">Role</th>
+                <th className="py-3 px-5 text-left">Status</th>
+                <th className="py-3 px-5 text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
               {users.map((u) => (
-                <tr key={u.id} className="border-b border-gray-700 last:border-b-0">
-                  <td className="py-2 px-4">{u.username}</td>
-                  <td className="py-2 px-4">{u.email}</td>
-                  <td className="py-2 px-4">{u.role}</td>
-                  <td className="py-2 px-4">{u.isBanned ? 'Banned' : 'Active'}</td>
-                  <td className="py-2 px-4">
+                <tr key={u.id} className="border-b border-gray-700 last:border-b-0 hover:bg-gray-700/50 transition-colors duration-200">
+                  <td className="py-3 px-5 text-gray-300">{u.username}</td>
+                  <td className="py-3 px-5 text-gray-300">{u.email}</td>
+                  <td className="py-3 px-5 text-gray-300">{u.role}</td>
+                  <td className="py-3 px-5 text-gray-300">{u.isBanned ? 'Banned' : 'Active'}</td>
+                  <td className="py-3 px-5">
                     {!u.isBanned && (
                       <button
                         onClick={() => handleBanUser(u.id)}
-                        className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-full text-sm"
+                        className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full text-sm transition-all duration-200 hover:scale-105"
                         disabled={loading}
                       >
                         Ban
@@ -250,29 +250,29 @@ const AdminDashboardPage = () => {
       </div>
 
       {/* Shop Management Section */}
-      <div className="w-full max-w-4xl bg-gray-900 p-6 rounded-lg shadow-lg mb-8">
-        <h2 className="text-2xl font-bold mb-4">Shop Management</h2>
+      <div className="w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8 rounded-2xl shadow-2xl border border-gray-700/50 mb-8">
+        <h2 className="text-2xl font-bold mb-6 text-white">Shop Management</h2>
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-gray-800 rounded-lg overflow-hidden">
+          <table className="min-w-full bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
             <thead>
-              <tr className="bg-gray-700">
-                <th className="py-2 px-4 text-left">Shop Name</th>
-                <th className="py-2 px-4 text-left">Owner</th>
-                <th className="py-2 px-4 text-left">Status</th>
-                <th className="py-2 px-4 text-left">Actions</th>
+              <tr className="bg-gray-700 text-white">
+                <th className="py-3 px-5 text-left">Shop Name</th>
+                <th className="py-3 px-5 text-left">Owner</th>
+                <th className="py-3 px-5 text-left">Status</th>
+                <th className="py-3 px-5 text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
               {shops.map((s) => (
-                <tr key={s.id} className="border-b border-gray-700 last:border-b-0">
-                  <td className="py-2 px-4">{s.name}</td>
-                  <td className="py-2 px-4">{s.owner}</td>
-                  <td className="py-2 px-4">{s.status}</td>
-                  <td className="py-2 px-4">
+                <tr key={s.id} className="border-b border-gray-700 last:border-b-0 hover:bg-gray-700/50 transition-colors duration-200">
+                  <td className="py-3 px-5 text-gray-300">{s.name}</td>
+                  <td className="py-3 px-5 text-gray-300">{s.owner}</td>
+                  <td className="py-3 px-5 text-gray-300">{s.status}</td>
+                  <td className="py-3 px-5">
                     {s.status === 'Pending' && (
                       <button
                         onClick={() => handleApproveShop(s.id)}
-                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded-full text-sm mr-2"
+                        className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full text-sm mr-2 transition-all duration-200 hover:scale-105"
                         disabled={loading}
                       >
                         Approve
@@ -281,7 +281,7 @@ const AdminDashboardPage = () => {
                     {s.status !== 'Suspended' && (
                       <button
                         onClick={() => handleSuspendShop(s.id)}
-                        className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded-full text-sm"
+                        className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full text-sm transition-all duration-200 hover:scale-105"
                         disabled={loading}
                       >
                         Suspend
@@ -296,51 +296,51 @@ const AdminDashboardPage = () => {
       </div>
 
       {/* Product Catalog Management Section */}
-      <div className="w-full max-w-4xl bg-gray-900 p-6 rounded-lg shadow-lg mb-8">
-        <h2 className="text-2xl font-bold mb-4">Master Product Catalog Management</h2>
-        <form onSubmit={handleAddMasterProduct} className="space-y-4 mb-6 p-4 border border-gray-800 rounded-lg">
-          <h3 className="text-xl font-bold mb-2">Add New Master Product</h3>
+      <div className="w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8 rounded-2xl shadow-2xl border border-gray-700/50 mb-8">
+        <h2 className="text-2xl font-bold mb-6 text-white">Master Product Catalog Management</h2>
+        <form onSubmit={handleAddMasterProduct} className="space-y-6 mb-8 p-6 border border-gray-700/50 rounded-xl bg-gray-800/50">
+          <h3 className="text-xl font-bold mb-4 text-white">Add New Master Product</h3>
           <div>
             <label htmlFor="newMasterProductName" className="block text-gray-300 text-sm font-bold mb-2">Product Name</label>
-            <input type="text" id="newMasterProductName" className="input-field" value={newMasterProductName} onChange={(e) => setNewMasterProductName(e.target.value)} required />
+            <input type="text" id="newMasterProductName" className="w-full p-3 rounded-lg bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-700" value={newMasterProductName} onChange={(e) => setNewMasterProductName(e.target.value)} required />
           </div>
           <div>
             <label htmlFor="newMasterProductCategory" className="block text-gray-300 text-sm font-bold mb-2">Category</label>
-            <input type="text" id="newMasterProductCategory" className="input-field" value={newMasterProductCategory} onChange={(e) => setNewMasterProductCategory(e.target.value)} required />
+            <input type="text" id="newMasterProductCategory" className="w-full p-3 rounded-lg bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-700" value={newMasterProductCategory} onChange={(e) => setNewMasterProductCategory(e.target.value)} required />
           </div>
           <div>
             <label htmlFor="newMasterProductBrand" className="block text-gray-300 text-sm font-bold mb-2">Brand</label>
-            <input type="text" id="newMasterProductBrand" className="input-field" value={newMasterProductBrand} onChange={(e) => setNewMasterProductBrand(e.target.value)} required />
+            <input type="text" id="newMasterProductBrand" className="w-full p-3 rounded-lg bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-700" value={newMasterProductBrand} onChange={(e) => setNewMasterProductBrand(e.target.value)} required />
           </div>
-          <button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full" disabled={loading}>
+          <button type="submit" className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full transition-all duration-200 hover:scale-105" disabled={loading}>
             {loading ? 'Adding...' : 'Add Master Product'}
           </button>
         </form>
 
-        <h3 className="text-xl font-bold mb-2">Existing Master Products</h3>
+        <h3 className="text-xl font-bold mb-4 text-white">Existing Master Products</h3>
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-gray-800 rounded-lg overflow-hidden">
+          <table className="min-w-full bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
             <thead>
-              <tr className="bg-gray-700">
-                <th className="py-2 px-4 text-left">Name</th>
-                <th className="py-2 px-4 text-left">Category</th>
-                <th className="py-2 px-4 text-left">Brand</th>
-                <th className="py-2 px-4 text-left">Actions</th>
+              <tr className="bg-gray-700 text-white">
+                <th className="py-3 px-5 text-left">Name</th>
+                <th className="py-3 px-5 text-left">Category</th>
+                <th className="py-3 px-5 text-left">Brand</th>
+                <th className="py-3 px-5 text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
               {masterProducts.map((p) => (
-                <tr key={p.id} className="border-b border-gray-700 last:border-b-0">
-                  <td className="py-2 px-4">{p.name}</td>
-                  <td className="py-2 px-4">{p.category}</td>
-                  <td className="py-2 px-4">{p.brand}</td>
-                  <td className="py-2 px-4">
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded-full text-sm mr-2">
+                <tr key={p.id} className="border-b border-gray-700 last:border-b-0 hover:bg-gray-700/50 transition-colors duration-200">
+                  <td className="py-3 px-5 text-gray-300">{p.name}</td>
+                  <td className="py-3 px-5 text-gray-300">{p.category}</td>
+                  <td className="py-3 px-5 text-gray-300">{p.brand}</td>
+                  <td className="py-3 px-5">
+                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full text-sm mr-2 transition-all duration-200 hover:scale-105">
                       Edit
                     </button>
                     <button
                       onClick={() => handleDeleteMasterProduct(p.id)}
-                      className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-full text-sm"
+                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full text-sm transition-all duration-200 hover:scale-105"
                       disabled={loading}
                     >
                       Delete
@@ -354,37 +354,37 @@ const AdminDashboardPage = () => {
       </div>
 
       {/* Category Management Section */}
-      <div className="w-full max-w-4xl bg-gray-900 p-6 rounded-lg shadow-lg mb-8">
-        <h2 className="text-2xl font-bold mb-4">Category Management</h2>
-        <form onSubmit={handleAddCategory} className="space-y-4 mb-6 p-4 border border-gray-800 rounded-lg">
-          <h3 className="text-xl font-bold mb-2">Add New Category</h3>
+      <div className="w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8 rounded-2xl shadow-2xl border border-gray-700/50 mb-8">
+        <h2 className="text-2xl font-bold mb-6 text-white">Category Management</h2>
+        <form onSubmit={handleAddCategory} className="space-y-6 mb-8 p-6 border border-gray-700/50 rounded-xl bg-gray-800/50">
+          <h3 className="text-xl font-bold mb-4 text-white">Add New Category</h3>
           <div>
             <label htmlFor="newCategoryName" className="block text-gray-300 text-sm font-bold mb-2">Category Name</label>
-            <input type="text" id="newCategoryName" className="input-field" value={newCategoryName} onChange={(e) => setNewCategoryName(e.target.value)} required />
+            <input type="text" id="newCategoryName" className="w-full p-3 rounded-lg bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-700" value={newCategoryName} onChange={(e) => setNewCategoryName(e.target.value)} required />
           </div>
-          <button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full" disabled={loading}>
+          <button type="submit" className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full transition-all duration-200 hover:scale-105" disabled={loading}>
             {loading ? 'Adding...' : 'Add Category'}
           </button>
         </form>
 
-        <h3 className="text-xl font-bold mb-2">Existing Categories</h3>
+        <h3 className="text-xl font-bold mb-4 text-white">Existing Categories</h3>
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-gray-800 rounded-lg overflow-hidden">
+          <table className="min-w-full bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
             <thead>
-              <tr className="bg-gray-700">
-                <th className="py-2 px-4 text-left">Name</th>
-                <th className="py-2 px-4 text-left">Actions</th>
+              <tr className="bg-gray-700 text-white">
+                <th className="py-3 px-5 text-left">Name</th>
+                <th className="py-3 px-5 text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
               {categories.map((cat) => (
-                <tr key={cat.id} className="border-b border-gray-700 last:border-b-0">
-                  <td className="py-2 px-4">{cat.name}</td>
-                  <td className="py-2 px-4">
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded-full text-sm mr-2">
+                <tr key={cat.id} className="border-b border-gray-700 last:border-b-0 hover:bg-gray-700/50 transition-colors duration-200">
+                  <td className="py-3 px-5 text-gray-300">{cat.name}</td>
+                  <td className="py-3 px-5">
+                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full text-sm mr-2 transition-all duration-200 hover:scale-105">
                       Edit
                     </button>
-                    <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-full text-sm">
+                    <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full text-sm transition-all duration-200 hover:scale-105">
                       Delete
                     </button>
                   </td>
@@ -396,37 +396,37 @@ const AdminDashboardPage = () => {
       </div>
 
       {/* Brand Management Section */}
-      <div className="w-full max-w-4xl bg-gray-900 p-6 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-4">Brand Management</h2>
-        <form onSubmit={handleAddBrand} className="space-y-4 mb-6 p-4 border border-gray-800 rounded-lg">
-          <h3 className="text-xl font-bold mb-2">Add New Brand</h3>
+      <div className="w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8 rounded-2xl shadow-2xl border border-gray-700/50">
+        <h2 className="text-2xl font-bold mb-6 text-white">Brand Management</h2>
+        <form onSubmit={handleAddBrand} className="space-y-6 mb-8 p-6 border border-gray-700/50 rounded-xl bg-gray-800/50">
+          <h3 className="text-xl font-bold mb-4 text-white">Add New Brand</h3>
           <div>
             <label htmlFor="newBrandName" className="block text-gray-300 text-sm font-bold mb-2">Brand Name</label>
-            <input type="text" id="newBrandName" className="input-field" value={newBrandName} onChange={(e) => setNewBrandName(e.target.value)} required />
+            <input type="text" id="newBrandName" className="w-full p-3 rounded-lg bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-700" value={newBrandName} onChange={(e) => setNewBrandName(e.target.value)} required />
           </div>
-          <button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full" disabled={loading}>
+          <button type="submit" className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full transition-all duration-200 hover:scale-105" disabled={loading}>
             {loading ? 'Adding...' : 'Add Brand'}
           </button>
         </form>
 
-        <h3 className="text-xl font-bold mb-2">Existing Brands</h3>
+        <h3 className="text-xl font-bold mb-4 text-white">Existing Brands</h3>
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-gray-800 rounded-lg overflow-hidden">
+          <table className="min-w-full bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
             <thead>
-              <tr className="bg-gray-700">
-                <th className="py-2 px-4 text-left">Name</th>
-                <th className="py-2 px-4 text-left">Actions</th>
+              <tr className="bg-gray-700 text-white">
+                <th className="py-3 px-5 text-left">Name</th>
+                <th className="py-3 px-5 text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
               {brands.map((brand) => (
-                <tr key={brand.id} className="border-b border-gray-700 last:border-b-0">
-                  <td className="py-2 px-4">{brand.name}</td>
-                  <td className="py-2 px-4">
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded-full text-sm mr-2">
+                <tr key={brand.id} className="border-b border-gray-700 last:border-b-0 hover:bg-gray-700/50 transition-colors duration-200">
+                  <td className="py-3 px-5 text-gray-300">{brand.name}</td>
+                  <td className="py-3 px-5">
+                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full text-sm mr-2 transition-all duration-200 hover:scale-105">
                       Edit
                     </button>
-                    <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-full text-sm">
+                    <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full text-sm transition-all duration-200 hover:scale-105">
                       Delete
                     </button>
                   </td>
