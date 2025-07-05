@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import PostComposer from '../components/PostComposer';
-import PostCard from '../components/PostCard';
+import EnhancedPostCard from '../components/EnhancedPostCard';
 import ProductCard from '../components/ProductCard';
+import LoadingSpinner from '../components/LoadingSpinner';
+import FloatingActionButton from '../components/FloatingActionButton';
 import { getPosts, getNewArrivals, getPromotions, getPopularProducts } from '../services/api';
 
 interface Post {
@@ -43,6 +45,7 @@ export default function Home() {
   const [errorPosts, setErrorPosts] = useState<string | null>(null);
   const [errorProducts, setErrorProducts] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'for-you' | 'following'>('for-you');
+  const [showComposer, setShowComposer] = useState(false);
 
   const fetchPosts = async () => {
     setLoadingPosts(true);
@@ -83,40 +86,13 @@ export default function Home() {
 
   const handlePostCreated = () => {
     fetchPosts();
+    setShowComposer(false);
   };
 
   if (loadingPosts && loadingProducts) {
     return (
-      <div className="min-h-screen">
-        {/* Header Skeleton */}
-        <div className="sticky top-0 bg-black/80 backdrop-blur-md border-b border-gray-800/50 p-4">
-          <div className="skeleton h-6 w-24 rounded"></div>
-        </div>
-        
-        {/* Post Composer Skeleton */}
-        <div className="border-b border-gray-800/50 p-4">
-          <div className="flex space-x-4">
-            <div className="skeleton w-12 h-12 rounded-full"></div>
-            <div className="flex-1 space-y-3">
-              <div className="skeleton h-4 w-3/4 rounded"></div>
-              <div className="skeleton h-4 w-1/2 rounded"></div>
-            </div>
-          </div>
-        </div>
-
-        {/* Posts Skeleton */}
-        {[...Array(3)].map((_, i) => (
-          <div key={i} className="border-b border-gray-800/50 p-4">
-            <div className="flex space-x-3">
-              <div className="skeleton w-12 h-12 rounded-full"></div>
-              <div className="flex-1 space-y-3">
-                <div className="skeleton h-4 w-1/3 rounded"></div>
-                <div className="skeleton h-4 w-full rounded"></div>
-                <div className="skeleton h-4 w-2/3 rounded"></div>
-              </div>
-            </div>
-          </div>
-        ))}
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner size="lg" color="blue" text="Loading your feed..." />
       </div>
     );
   }
@@ -124,8 +100,8 @@ export default function Home() {
   if (errorPosts && errorProducts) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">😵</div>
+        <div className="text-center animate-bounce-in">
+          <div className="text-6xl mb-4 animate-float">😵</div>
           <h2 className="text-xl font-bold text-white mb-2">Something went wrong</h2>
           <p className="text-gray-500 mb-4">We're having trouble loading the content</p>
           <button
@@ -133,7 +109,7 @@ export default function Home() {
               fetchPosts();
               fetchProductSections();
             }}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-full transition-all duration-200 hover:scale-105"
+            className="btn-primary px-6 py-2"
           >
             Try Again
           </button>
@@ -144,50 +120,67 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <div className="sticky top-0 bg-black/80 backdrop-blur-md border-b border-gray-800/50 z-10">
+      {/* Enhanced Header */}
+      <div className="sticky top-0 glass-strong border-b border-gray-800/50 z-20">
         <div className="flex items-center justify-between p-4">
           <h1 className="text-xl font-bold text-white">Home</h1>
-          <button className="text-gray-400 hover:text-white transition-colors">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-            </svg>
-          </button>
+          <div className="flex items-center space-x-2">
+            <button className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800/50 rounded-full">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </button>
+            <button 
+              onClick={() => setShowComposer(!showComposer)}
+              className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800/50 rounded-full"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+            </button>
+          </div>
         </div>
 
-        {/* Tabs */}
+        {/* Enhanced Tabs */}
         <div className="flex border-b border-gray-800/50">
           <button
             onClick={() => setActiveTab('for-you')}
-            className={`flex-1 py-4 text-center font-medium transition-all duration-200 relative ${
+            className={`flex-1 py-4 text-center font-medium transition-all duration-300 relative group ${
               activeTab === 'for-you'
                 ? 'text-white'
                 : 'text-gray-500 hover:text-gray-300'
             }`}
           >
-            For you
+            <span className="relative z-10">For you</span>
             {activeTab === 'for-you' && (
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-blue-500 rounded-full"></div>
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-slide-up"></div>
             )}
+            <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
           </button>
           <button
             onClick={() => setActiveTab('following')}
-            className={`flex-1 py-4 text-center font-medium transition-all duration-200 relative ${
+            className={`flex-1 py-4 text-center font-medium transition-all duration-300 relative group ${
               activeTab === 'following'
                 ? 'text-white'
                 : 'text-gray-500 hover:text-gray-300'
             }`}
           >
-            Following
+            <span className="relative z-10">Following</span>
             {activeTab === 'following' && (
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-blue-500 rounded-full"></div>
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-slide-up"></div>
             )}
+            <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
           </button>
         </div>
       </div>
 
-      {/* Post Composer */}
-      <PostComposer onPostCreated={handlePostCreated} />
+      {/* Collapsible Post Composer */}
+      {showComposer && (
+        <div className="animate-slide-up">
+          <PostComposer onPostCreated={handlePostCreated} />
+        </div>
+      )}
 
       {/* Content based on active tab */}
       {activeTab === 'for-you' ? (
@@ -195,55 +188,66 @@ export default function Home() {
           {/* Social Feed */}
           <div>
             {posts.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="text-6xl mb-4">🌟</div>
+              <div className="text-center py-12 animate-bounce-in">
+                <div className="text-6xl mb-4 animate-float">🌟</div>
                 <h2 className="text-xl font-bold text-white mb-2">Welcome to IJIDeals!</h2>
-                <p className="text-gray-500">Be the first to share something amazing</p>
+                <p className="text-gray-500 mb-6">Be the first to share something amazing</p>
+                <button 
+                  onClick={() => setShowComposer(true)}
+                  className="btn-primary px-6 py-2"
+                >
+                  Create your first post
+                </button>
               </div>
             ) : (
-              posts.map((post) => (
-                <PostCard
-                  key={post.id}
-                  id={post.id}
-                  username={post.username}
-                  handle={post.handle}
-                  time={post.time}
-                  content={post.content}
-                  avatarSrc={post.avatarSrc}
-                  product={post.product}
-                  comments={post.comments}
-                  reposts={post.reposts}
-                  likes={post.likes}
-                />
+              posts.map((post, index) => (
+                <div key={post.id} className="animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
+                  <EnhancedPostCard
+                    id={post.id}
+                    username={post.username}
+                    handle={post.handle}
+                    time={post.time}
+                    content={post.content}
+                    avatarSrc={post.avatarSrc}
+                    product={post.product}
+                    comments={post.comments}
+                    reposts={post.reposts}
+                    likes={post.likes}
+                  />
+                </div>
               ))
             )}
           </div>
 
-          {/* Product Sections */}
+          {/* Enhanced Product Sections */}
           {!loadingProducts && (
             <>
               {/* New Arrivals */}
               {newArrivals.length > 0 && (
-                <div className="border-b border-gray-800/50 p-6">
+                <div className="border-b border-gray-800/50 p-6 animate-slide-up">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-xl font-bold text-white flex items-center">
-                      <span className="mr-2">✨</span>
+                      <span className="mr-2 animate-bounce">✨</span>
                       New Arrivals
+                      <span className="ml-2 bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded-full">
+                        {newArrivals.length}
+                      </span>
                     </h2>
-                    <button className="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                    <button className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors hover:scale-105">
                       See all
                     </button>
                   </div>
                   <div className="grid grid-cols-1 gap-3">
-                    {newArrivals.slice(0, 2).map((product) => (
-                      <ProductCard
-                        key={product.id}
-                        id={product.id}
-                        name={product.name}
-                        category={product.category}
-                        price={product.price}
-                        image={product.image}
-                      />
+                    {newArrivals.slice(0, 2).map((product, index) => (
+                      <div key={product.id} className="animate-slide-up" style={{ animationDelay: `${index * 150}ms` }}>
+                        <ProductCard
+                          id={product.id}
+                          name={product.name}
+                          category={product.category}
+                          price={product.price}
+                          image={product.image}
+                        />
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -251,26 +255,30 @@ export default function Home() {
 
               {/* Promotions */}
               {promotions.length > 0 && (
-                <div className="border-b border-gray-800/50 p-6">
+                <div className="border-b border-gray-800/50 p-6 animate-slide-up">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-xl font-bold text-white flex items-center">
-                      <span className="mr-2">🔥</span>
+                      <span className="mr-2 animate-pulse">🔥</span>
                       Hot Deals
+                      <span className="ml-2 bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded-full animate-pulse">
+                        Limited Time
+                      </span>
                     </h2>
-                    <button className="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                    <button className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors hover:scale-105">
                       See all
                     </button>
                   </div>
                   <div className="grid grid-cols-1 gap-3">
-                    {promotions.slice(0, 2).map((product) => (
-                      <ProductCard
-                        key={product.id}
-                        id={product.id}
-                        name={product.name}
-                        category={product.category}
-                        price={product.price}
-                        image={product.image}
-                      />
+                    {promotions.slice(0, 2).map((product, index) => (
+                      <div key={product.id} className="animate-slide-up" style={{ animationDelay: `${index * 150}ms` }}>
+                        <ProductCard
+                          id={product.id}
+                          name={product.name}
+                          category={product.category}
+                          price={product.price}
+                          image={product.image}
+                        />
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -278,26 +286,30 @@ export default function Home() {
 
               {/* Popular Products */}
               {popularProducts.length > 0 && (
-                <div className="border-b border-gray-800/50 p-6">
+                <div className="border-b border-gray-800/50 p-6 animate-slide-up">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-xl font-bold text-white flex items-center">
                       <span className="mr-2">📈</span>
                       Trending
+                      <span className="ml-2 bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded-full">
+                        Popular
+                      </span>
                     </h2>
-                    <button className="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                    <button className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors hover:scale-105">
                       See all
                     </button>
                   </div>
                   <div className="grid grid-cols-1 gap-3">
-                    {popularProducts.slice(0, 2).map((product) => (
-                      <ProductCard
-                        key={product.id}
-                        id={product.id}
-                        name={product.name}
-                        category={product.category}
-                        price={product.price}
-                        image={product.image}
-                      />
+                    {popularProducts.slice(0, 2).map((product, index) => (
+                      <div key={product.id} className="animate-slide-up" style={{ animationDelay: `${index * 150}ms` }}>
+                        <ProductCard
+                          id={product.id}
+                          name={product.name}
+                          category={product.category}
+                          price={product.price}
+                          image={product.image}
+                        />
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -307,13 +319,13 @@ export default function Home() {
         </>
       ) : (
         /* Following Tab */
-        <div className="text-center py-12">
-          <div className="text-6xl mb-4">👥</div>
+        <div className="text-center py-12 animate-bounce-in">
+          <div className="text-6xl mb-4 animate-float">👥</div>
           <h2 className="text-xl font-bold text-white mb-2">Follow some accounts</h2>
           <p className="text-gray-500 mb-6">
             When you follow accounts, you'll see their posts here.
           </p>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-full transition-all duration-200 hover:scale-105">
+          <button className="btn-primary px-6 py-2">
             Find people to follow
           </button>
         </div>
@@ -322,11 +334,25 @@ export default function Home() {
       {/* Load More Button */}
       {posts.length > 0 && activeTab === 'for-you' && (
         <div className="p-6 text-center">
-          <button className="text-blue-400 hover:text-blue-300 font-medium transition-colors">
-            Show more posts
+          <button className="text-blue-400 hover:text-blue-300 font-medium transition-all duration-200 hover:scale-105 flex items-center mx-auto space-x-2">
+            <span>Show more posts</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
           </button>
         </div>
       )}
+
+      {/* Floating Action Button */}
+      <FloatingActionButton
+        onClick={() => setShowComposer(!showComposer)}
+        tooltip="Create new post"
+        icon={
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+        }
+      />
     </div>
   );
 }
